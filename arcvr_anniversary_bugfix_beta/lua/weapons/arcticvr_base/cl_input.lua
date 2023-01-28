@@ -284,36 +284,36 @@ function SWEP:VRInput(action, state)
 		--pes pouch test
 		
 		
-		--Anniversaryzone
-    if GetConVar("arcticvr_weppouch"):GetBool() then
-        local weppouchbone = "ValveBiped.Bip01_Spine4"
-		local weppouchsize = GetConVar("arcticvr_hybridpouchdist"):GetFloat()
-		local weppouchdist = g_VR.eyePosRight
-		if (LocalPlayer():LookupBone(weppouchbone) && LocalPlayer():GetBoneMatrix(LocalPlayer():LookupBone(weppouchbone))) then
-			weppouchdist = LocalToWorld(Vector(3,3,0), Angle(0,0,0),
-			LocalPlayer():GetBoneMatrix(LocalPlayer():LookupBone(weppouchbone)):GetTranslation(),
-			Angle(0,g_VR.characterYaw,0))
+		-- --Anniversaryzone
+    -- if GetConVar("arcticvr_weppouch"):GetBool() then
+        -- local weppouchbone = "ValveBiped.Bip01_Spine4"
+		-- local weppouchsize = GetConVar("arcticvr_hybridpouchdist"):GetFloat()
+		-- local weppouchdist = g_VR.eyePosRight
+		-- if (LocalPlayer():LookupBone(weppouchbone) && LocalPlayer():GetBoneMatrix(LocalPlayer():LookupBone(weppouchbone))) then
+			-- weppouchdist = LocalToWorld(Vector(3,3,0), Angle(0,0,0),
+			-- LocalPlayer():GetBoneMatrix(LocalPlayer():LookupBone(weppouchbone)):GetTranslation(),
+			-- Angle(0,g_VR.characterYaw,0))
 	
 		
-				if g_VR.tracking.pose_righthand.pos:DistToSqr(weppouchdist) < (weppouchsize * weppouchsize) then
-					if action == "boolean_right_pickup" and state then
-						LocalPlayer():ConCommand("slot3")
+				-- if g_VR.tracking.pose_righthand.pos:DistToSqr(weppouchdist) < (weppouchsize * weppouchsize) then
+					-- if action == "boolean_right_pickup" and state then
+						-- LocalPlayer():ConCommand("slot3")
 						
-					elseif action == "boolean_right_pickup" and  !state then
+					-- elseif action == "boolean_right_pickup" and  !state then
 
-						if g_VR.tracking.pose_righthand.pos:DistToSqr(weppouchdist) < (weppouchsize * weppouchsize) then
+						-- if g_VR.tracking.pose_righthand.pos:DistToSqr(weppouchdist) < (weppouchsize * weppouchsize) then
 
-							LocalPlayer():ConCommand("slot1")
+							-- LocalPlayer():ConCommand("slot1")
 
-							return
+							-- return
 
-						end
-					end
-				end
-		end
-	end
+						-- end
+					-- end
+				-- end
+		-- end
+	-- end
 
-		--pes pouch end
+		-- --pes pouch end
 
 
 
