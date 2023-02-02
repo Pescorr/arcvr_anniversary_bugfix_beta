@@ -168,7 +168,7 @@ function SWEP:FiremodeSwitch()
     if !vm then return end
     if !IsValid(vm) then return end
 
-    if table.Count(self.Firemodes) == 1 then return end
+    if table.Count(self.Firemodes) < 2 then return end
 
     self:PlayNetworkedSound(nil, "SwitchModeSound")
 

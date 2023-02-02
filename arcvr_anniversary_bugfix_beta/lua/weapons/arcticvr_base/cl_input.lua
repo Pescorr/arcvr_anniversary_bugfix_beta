@@ -236,12 +236,6 @@ function SWEP:VRInput(action, state)
 	end
 	
 --Anniversaryzone
---floatingpouchdiststart
-	-- pouchsize = GetConVar("arcticvr_pouchsize"):GetFloat()
-	
-	-- if GetConVar("vrmod_floatinghands"):GetBool() or GetConVar("arcticvr_infpouch"):GetBool() then
-	-- pouchsize = 99999
-	-- end
 
 
 --floatingpouchdistend

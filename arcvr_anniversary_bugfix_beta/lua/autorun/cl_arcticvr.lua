@@ -94,34 +94,6 @@ hook.Add("VRMod_PreRenderRight", "avr_rightrender", function()
     end
 end)
 
--- hook.Add("PreDrawOpaqueRenderables", "avr_rtscope", function( depth, sky )
---     if sky then return end
-
---     local wpn = LocalPlayer():GetActiveWeapon()
-
---     local left = false
-
---     if g_VR.view.origin == g_VR.eyePosLeft then
---         left = true
---     end
--- end)
-
--- tracking:
--- 		hmd:
--- 				ang	=	0.044 17.125 0.909
--- 				angvel	=	0.239 0.293 0.023
--- 				pos	=	-39.197601 -2076.995850 31.977652
--- 				vel	=	-0.000745 -0.000299 0.001139
--- 		pose_lefthand:
--- 				ang	=	36.343 -6.817 7.154
--- 				angvel	=	1.403 -0.268 -0.126
--- 				pos	=	-38.255795 -2056.585693 33.242390
--- 				vel	=	-0.001984 -0.002926 0.000619
--- 		pose_righthand:
--- 				ang	=	37.672 3.286 3.465
--- 				angvel	=	0.906 0.030 -0.060
--- 				pos	=	-39.915737 -2066.740967 33.302757
--- 				vel	=	-0.001716 -0.001425 0.000653
 
 local function divvec(vec, div)
     vec[1] = vec[1] / div
@@ -526,19 +498,6 @@ hook.Add( "VRMod_Tracking", "avr_guntracking", function()
 	
 end)
 
-			-- local tickrate = GetConVar("vrmod_net_tickrate"):GetInt()
-		
-			-- hook.Add("Tick","yrsysss",function()
-				-- local updates = false
-				-- for handWPos,handWAng in pairs(g_VR) do
-					-- StartLerpingToGrabPoint( vm:LookupBone("ValveBiped.Bip01_L_Hand").bone)
-					-- updates = true
-				-- end
-				-- if not updates then
-					-- hook.Remove("Tick","yrsysss")
-					-- --print("position update hook removed")
-				-- end
-			-- end)
 
 
 hook.Add( "VRMod_Pickup", "avr_pickup", function(ply, ent)
