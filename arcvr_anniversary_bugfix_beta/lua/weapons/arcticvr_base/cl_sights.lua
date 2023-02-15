@@ -33,7 +33,7 @@ function SWEP:DrawRTScope(rts, rtsm, rtmat, rtsurf, left)
     local attid = rtsm:LookupAttachment("scope")
 
     if !attid then return end
-	-- if !ret then return end
+    -- if !ret then return end
 
     local ret = rtsm:GetAttachment(attid)
     local pos = ret.Pos
@@ -43,7 +43,7 @@ function SWEP:DrawRTScope(rts, rtsm, rtmat, rtsurf, left)
     pos = pos + ang:Forward() * rts.RTScopeOffset[2]
     pos = pos + ang:Up() * rts.RTScopeOffset[1]
 
-    local eyeang = g_VR.tracking.hmd.ang
+    -- local eyeang = g_VR.tracking.hmd.ang
     local lefteye = g_VR.eyePosLeft
     local righteye = g_VR.eyePosRight
 
@@ -265,11 +265,12 @@ function SWEP:DrawLaserSight(lsm, ls)
     local ret = lsm:GetAttachment(attid)
     local pos = ret.Pos
     local ang = ret.Ang
+    local owner = self:GetOwner()
 
     local tr = util.TraceLine({
         start = pos,
         endpos = pos + (ang:Up() * 40000),
-        filter = self.Owner
+        filter = owner
     })
     local hit = tr.HitPos
     local didhit = tr.Hit
