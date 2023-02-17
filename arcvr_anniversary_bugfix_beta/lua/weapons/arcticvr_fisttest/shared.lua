@@ -132,9 +132,6 @@ SWEP.BoneIndices = {
     bullet = 0,
     slidelock = 0,
     mag = 0,
-    bladeend = 0,
-    bladestart = 0,
-
 }
 
 SWEP.FingerAngles = {

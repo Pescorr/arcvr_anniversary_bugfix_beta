@@ -53,6 +53,9 @@ util.AddNetworkString("avr_deploy")
 util.AddNetworkString("avr_holster")
 util.AddNetworkString("avr_shoot")
 util.AddNetworkString("avr_meleeattack")
+util.AddNetworkString("avr_meleeattack_weapon")
+util.AddNetworkString("avr_meleeattack_lefthand")
+util.AddNetworkString("avr_meleeattack_righthand")
 util.AddNetworkString("avr_secondaryattack")
 util.AddNetworkString("avr_nadethrow")
 util.AddNetworkString("avr_pose")
@@ -140,6 +143,50 @@ net.Receive("avr_meleeattack", function(len, ply)
         wpn:VR_Melee(src, vel)
     end
 end)
+
+net.Receive("avr_meleeattack_weapon", function(len, ply)
+    local src = Vector(0, 0, 0)
+    src[1] = net.ReadFloat()
+    src[2] = net.ReadFloat()
+    src[3] = net.ReadFloat()
+    local vel = net.ReadVector()
+
+    local wpn = ply:GetActiveWeapon()
+
+    if wpn.ArcticVR then
+        wpn:VR_Melee(src, vel)
+    end
+end)
+
+
+net.Receive("avr_meleeattack_lefthand", function(len, ply)
+    local src = Vector(0, 0, 0)
+    src[1] = net.ReadFloat()
+    src[2] = net.ReadFloat()
+    src[3] = net.ReadFloat()
+    local vel = net.ReadVector()
+
+    local wpn = ply:GetActiveWeapon()
+
+    if wpn.ArcticVR then
+        wpn:VR_Melee(src, vel)
+    end
+end)
+
+net.Receive("avr_meleeattack_righthand", function(len, ply)
+    local src = Vector(0, 0, 0)
+    src[1] = net.ReadFloat()
+    src[2] = net.ReadFloat()
+    src[3] = net.ReadFloat()
+    local vel = net.ReadVector()
+
+    local wpn = ply:GetActiveWeapon()
+
+    if wpn.ArcticVR then
+        wpn:VR_Melee(src, vel)
+    end
+end)
+
 
 net.Receive("avr_nadethrow", function(len, ply)
     local src = Vector(0, 0, 0)
@@ -304,7 +351,7 @@ net.Receive("avr_magout_r", function(len, ply)
     end
 end)
 
-net.Receive("avr_pose_r", function(len, ply)
+net.Receive("avr_pose", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
     local lefthand = net.ReadBool()
@@ -313,61 +360,63 @@ net.Receive("avr_pose_r", function(len, ply)
     GrabAndPose(ent, pos, ang, lefthand, ply)
 end)
 
-
 net.Receive("avr_spawnmag_r", function(len, ply)
-			local pos = net.ReadVector()
-			local ang = net.ReadAngle()
+    local pos = net.ReadVector()
+    local ang = net.ReadAngle()
+    local timertime = 0
+    local wpn = ply:GetActiveWeapon()
+	
 
-			local timertime = 0
-			local wpn = ply:GetActiveWeapon()
 
-			if !wpn.ArcticVR then return end
+    if !wpn.ArcticVR then return end
 
-			for k, v in pairs(g_VR[ply:SteamID()].heldItems) do
-				if v.left then return end
-			end
+    for k, v in pairs(g_VR[ply:SteamID()].heldItems) do
+        if v.left then return end
+    end
 
-			local magid = wpn.DefaultMagazine
+    local magid = wpn.DefaultMagazine
 
-			if wpn:GetAttOverride("MagExtender") then
-				if wpn.ExtendedMagazine then
-					magid = wpn.ExtendedMagazine
-				end
-			end
+    if wpn:GetAttOverride("MagExtender") then
+        if wpn.ExtendedMagazine then
+            magid = wpn.ExtendedMagazine
+        end
+    end
 
-			if wpn:GetAttOverride("MagReducer") then
-				if wpn.ReducedMagazine then
-					magid = wpn.ReducedMagazine
-				end
+    if wpn:GetAttOverride("MagReducer") then
+        if wpn.ReducedMagazine then
+            magid = wpn.ReducedMagazine
+        end
 
-				if wpn:GetAttOverride("MagExtender") then
-					magid = wpn.DefaultMagazine
-				end
-			end
+        if wpn:GetAttOverride("MagExtender") then
+            magid = wpn.DefaultMagazine
+        end
+    end
 
-			local magtbl = ArcticVR.MagazineTable[magid]
+    local magtbl = ArcticVR.MagazineTable[magid]
 
-			local cap = magtbl.Capacity
-			local ammotype = wpn.Primary.Ammo
-			local reserve = ply:GetAmmoCount(ammotype)
-			local toload = math.Clamp(reserve, 0, cap)
+    local cap = magtbl.Capacity
+    local ammotype = wpn.Primary.Ammo
+    local reserve = ply:GetAmmoCount(ammotype)
+    local toload = math.Clamp(reserve, 0, cap)
 
-			local mag = ArcticVR.CreateMag(magid, toload)
+    local mag = ArcticVR.CreateMag(magid, toload)
 
-			if !mag then return end
+    if !mag then return end
 
-			ply:SetAmmo(reserve - toload, ammotype)
+    ply:SetAmmo(reserve - toload, ammotype)
 
-			mag:SetAngles(ang)
-			mag:SetPos(pos)
-		-- local timertime = 0
+    mag:SetAngles(ang)
+    mag:SetPos(pos)
 
-		-- if !game.SinglePlayer() then
+    -- local timertime = 0
+
+    -- if !game.SinglePlayer() then
         timertime = GetConVar("arcticvr_net_magtimertime"):GetFloat()
-		-- end
+    -- end
 
     timer.Simple(timertime, function()
-			GrabAndPose(mag, pos, ang, true, ply)
-		end)
-	end)
+        GrabAndPose(mag, pos, ang, true, ply)
+    end)
+end)
+
 end

@@ -327,6 +327,9 @@ AddCSLuaFile("cl_sights.lua")
 AddCSLuaFile("cl_think.lua")
 AddCSLuaFile("cl_input.lua")
 
+AddCSLuaFile("cl_melee_extra.lua") --追加ファイルテスト。meleeの別ファイル化を目指す
+
+
 if CLIENT then
     include("cl_misc.lua")
     include("cl_melee.lua")
@@ -335,6 +338,7 @@ if CLIENT then
     include("cl_sights.lua")
     include("cl_think.lua")
     include("cl_input.lua")
+    include("cl_melee_extra.lua") --追加ファイルテスト。meleeその2。
 end
 
 AddCSLuaFile("sh_attachments.lua")
