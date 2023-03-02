@@ -10,6 +10,9 @@ function SWEP:VRThink()
 
     if self.MeleeAttack then
         self:DetectMeleeStrike()
+        self:DetectMeleeweapon()
+        self:DetectMeleelefthand()
+        self:DetectMeleerighthand()
     end
 
     local vec1 = Vector(1, 1, 1)
@@ -443,7 +446,7 @@ function SWEP:VRThink()
             -- self:SetBodygroup(bgs.ind, 0)
         -- end
     -- end
--- end
+    -- end
 
 
     if self.VolleyFire and !self.VolleyFireAutoEject then

@@ -52,6 +52,9 @@ util.AddNetworkString("avr_deploy")
 util.AddNetworkString("avr_holster")
 util.AddNetworkString("avr_shoot")
 util.AddNetworkString("avr_meleeattack")
+util.AddNetworkString("avr_meleeattack_weapon")
+util.AddNetworkString("avr_meleeattack_lefthand")
+util.AddNetworkString("avr_meleeattack_righthand")
 util.AddNetworkString("avr_secondaryattack")
 util.AddNetworkString("avr_nadethrow")
 util.AddNetworkString("avr_pose")
@@ -139,6 +142,50 @@ net.Receive("avr_meleeattack", function(len, ply)
         wpn:VR_Melee(src, vel)
     end
 end)
+
+net.Receive("avr_meleeattack_weapon", function(len, ply)
+    local src = Vector(0, 0, 0)
+    src[1] = net.ReadFloat()
+    src[2] = net.ReadFloat()
+    src[3] = net.ReadFloat()
+    local vel = net.ReadVector()
+
+    local wpn = ply:GetActiveWeapon()
+
+    if wpn.ArcticVR then
+        wpn:VR_Melee(src, vel)
+    end
+end)
+
+
+net.Receive("avr_meleeattack_lefthand", function(len, ply)
+    local src = Vector(0, 0, 0)
+    src[1] = net.ReadFloat()
+    src[2] = net.ReadFloat()
+    src[3] = net.ReadFloat()
+    local vel = net.ReadVector()
+
+    local wpn = ply:GetActiveWeapon()
+
+    if wpn.ArcticVR then
+        wpn:VR_Melee(src, vel)
+    end
+end)
+
+net.Receive("avr_meleeattack_righthand", function(len, ply)
+    local src = Vector(0, 0, 0)
+    src[1] = net.ReadFloat()
+    src[2] = net.ReadFloat()
+    src[3] = net.ReadFloat()
+    local vel = net.ReadVector()
+
+    local wpn = ply:GetActiveWeapon()
+
+    if wpn.ArcticVR then
+        wpn:VR_Melee(src, vel)
+    end
+end)
+
 
 net.Receive("avr_nadethrow", function(len, ply)
     local src = Vector(0, 0, 0)
@@ -300,7 +347,7 @@ net.Receive("avr_magout_r", function(len, ply)
     end
 end)
 
-net.Receive("avr_pose_r", function(len, ply)
+net.Receive("avr_pose", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
     local lefthand = net.ReadBool()
@@ -308,7 +355,6 @@ net.Receive("avr_pose_r", function(len, ply)
 
     GrabAndPose(ent, pos, ang, lefthand, ply)
 end)
-
 
 net.Receive("avr_spawnmag_r", function(len, ply)
     local pos = net.ReadVector()
