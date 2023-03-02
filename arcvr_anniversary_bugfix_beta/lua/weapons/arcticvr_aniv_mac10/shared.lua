@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.Spawnable = true
-SWEP.Category = "Arctic VR - Aniversary"
+SWEP.Category = "Arctic VR - Anniversary"
 SWEP.AdminOnly = false
 SWEP.UseHands = false
 
