@@ -1,11 +1,10 @@
-
-if SERVER then
+if not SERVER then return end
 CreateConVar("arcticvr_net_magtimertime", "0.08")
 CreateConVar("arcticvr_defaultammo_normalize", "0", FCVAR_ARCHIVE, "")
 
 hook.Add( "OnEntityCreated", "ArcticVR_NormalizeDefaultAmmo", function( ent )
-    if !ent:IsWeapon() then return end
-    if !(ent.ArcticVR or ent.ArcticVRNade) then return end
+    if not ent:IsWeapon() then return end
+    if not (ent.ArcticVR or ent.ArcticVRNade) then return end
     if GetConVar("arcticvr_defaultammo_normalize"):GetInt() == 0 then return end
 
     local clips = GetConVar("arcticvr_defaultammo_normalize"):GetInt()
@@ -45,7 +44,7 @@ CreateConVar("arcticvr_physical_bullets", "0", FCVAR_ARCHIVE, "")
 
 local phys_bullets = GetConVar("arcticvr_physical_bullets")
 function ArcticVR.IsPhysicalBullets()
-	return phys_bullets:GetInt() != 0
+    return phys_bullets:GetInt() ~= 0
 end
 
 
@@ -75,7 +74,7 @@ net.Receive("avr_playsound", function(len, ply)
     local sindex = net.ReadUInt(8)
     local wpn = ply:GetActiveWeapon()
 
-    if !wpn.ArcticVR then return end
+    if not wpn.ArcticVR then return end
 
     wpn:PlayNetworkedSound(sindex)
 end)
@@ -83,9 +82,9 @@ end)
 net.Receive("avr_despawnmag", function(len, ply)
     local mag = net.ReadEntity()
 
-    if !mag then return end
-    if !IsValid(mag) then return end
-    if !mag.ArcticVR then return end
+    if not mag then return end
+    if not IsValid(mag) then return end
+    if not mag.ArcticVR then return end
 
     local ammotype = mag.AmmoType
     local rounds = mag.Rounds
@@ -210,20 +209,20 @@ net.Receive("avr_magin", function(len, ply)
 
     local wpn = ply:GetActiveWeapon()
 
-    if !IsValid(mag) then return end
-    if !mag.ArcticVR then return end
-    if !mag.MagType then return end
-    if !wpn.ArcticVR then return end
+    if not IsValid(mag) then return end
+    if not mag.ArcticVR then return end
+    if not mag.MagType then return end
+    if not wpn.ArcticVR then return end
 
     local magtbl = ArcticVR.MagazineTable[mag.MagID]
 
     if magtbl.IsBeltBox then
-        if mag.MagType != wpn.BeltBoxType then return end
+        if mag.MagType ~= wpn.BeltBoxType then return end
     else
-        if mag.MagType != wpn.MagType then return end
+        if mag.MagType ~= wpn.MagType then return end
     end
 
-    if !dc then
+    if not dc then
         if wpn.InternalMagazine then
             wpn.LoadedRounds = wpn.LoadedRounds + mag.Rounds
 
@@ -244,10 +243,10 @@ net.Receive("avr_magin", function(len, ply)
 end)
 
 local function GrabAndPose(ent, pos, ang, lefthand, ply)
-    if !IsValid(ent) then return end
-    if !ent.ArcticVR then return end
+    if not IsValid(ent) then return end
+    if not ent.ArcticVR then return end
 
-    local ppos, pang = EntityPose(ent, pos, ang, !lefthand)
+    local ppos, pang = EntityPose(ent, pos, ang, not lefthand)
 
     ent:SetPos(ppos)
     ent:SetAngles(pang)
@@ -262,7 +261,7 @@ local function GrabAndPose(ent, pos, ang, lefthand, ply)
     for k2,v2 in pairs(g_VR[ply:SteamID()].heldItems) do
         if v2.ent == ent then table.remove(g_VR[ply:SteamID()].heldItems, k2) found = true end
     end
-    if !found then
+    if not found then
         ply:PickupObject(ent)
         timer.Simple(0, function() ply:DropObject() end)
     end
@@ -283,12 +282,12 @@ end
 function ArcticVR.CreateMag(magid, rounds)
     local magtbl = ArcticVR.MagazineTable[magid]
 
-    if !magtbl then return end
+    if not magtbl then return end
     local mag = ents.Create("avrmag_" .. magid)
     -- local mag = ents.Create("")
 
 
-    if !mag or !IsValid(mag) then print("!! Failed to create magazine") return end
+    if not mag or not IsValid(mag) then print("Failed to create magazine!!") return end
 
     for i, k in pairs(magtbl) do
         mag[i] = k
@@ -314,9 +313,6 @@ net.Receive("avr_magout_r", function(len, ply)
     local ang = net.ReadAngle()
     local wpn = ply:GetActiveWeapon()
     local hpos, hang, lefthand
-	
-
-	
 
     if grab then
         hpos = net.ReadVector()
@@ -324,9 +320,9 @@ net.Receive("avr_magout_r", function(len, ply)
         lefthand = net.ReadBool()
     end
 
-    if !wpn.ArcticVR then return end
+    if not wpn.ArcticVR then return end
 
-    if !wpn.Magazine then return end
+    if not wpn.Magazine then return end
 
     local loaded = wpn.LoadedRounds or 0
 
@@ -341,7 +337,7 @@ net.Receive("avr_magout_r", function(len, ply)
     if grab then
         local timertime = 0
 
-        -- if !game.SinglePlayer() then
+        -- if not game.SinglePlayer() then
         timertime = GetConVar("arcticvr_net_magtimertime"):GetFloat()
         -- end
 
@@ -363,12 +359,11 @@ end)
 net.Receive("avr_spawnmag_r", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
+
     local timertime = 0
     local wpn = ply:GetActiveWeapon()
-	
 
-
-    if !wpn.ArcticVR then return end
+    if not wpn.ArcticVR then return end
 
     for k, v in pairs(g_VR[ply:SteamID()].heldItems) do
         if v.left then return end
@@ -376,10 +371,8 @@ net.Receive("avr_spawnmag_r", function(len, ply)
 
     local magid = wpn.DefaultMagazine
 
-    if wpn:GetAttOverride("MagExtender") then
-        if wpn.ExtendedMagazine then
-            magid = wpn.ExtendedMagazine
-        end
+    if wpn:GetAttOverride("MagExtender") and wpn.ExtendedMagazine then
+        magid = wpn.ExtendedMagazine
     end
 
     if wpn:GetAttOverride("MagReducer") then
@@ -401,22 +394,19 @@ net.Receive("avr_spawnmag_r", function(len, ply)
 
     local mag = ArcticVR.CreateMag(magid, toload)
 
-    if !mag then return end
+    if not mag then return end
 
     ply:SetAmmo(reserve - toload, ammotype)
 
     mag:SetAngles(ang)
     mag:SetPos(pos)
-
     -- local timertime = 0
 
-    -- if !game.SinglePlayer() then
-        timertime = GetConVar("arcticvr_net_magtimertime"):GetFloat()
+    -- if not game.SinglePlayer() then
+    timertime = GetConVar("arcticvr_net_magtimertime"):GetFloat()
     -- end
 
     timer.Simple(timertime, function()
         GrabAndPose(mag, pos, ang, true, ply)
     end)
 end)
-
-end

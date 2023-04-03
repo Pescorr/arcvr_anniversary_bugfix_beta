@@ -217,9 +217,9 @@ SWEP.NotAGun = false -- this weapon is.... not a gun.
 
 SWEP.BaseFlags = {} -- {"flag", "flag2"}...
 if cv_all_attachment:GetBool() then
-	SWEP.Attachments = {}
+    SWEP.Attachments = {}
 else
-	SWEP.Attachments = {
+    SWEP.Attachments = {
     {
         Bone = "sight",
         Slot = "pic_sight",
@@ -618,7 +618,7 @@ function SWEP:Initialize()
     if CLIENT and self.ClientInitialized then return end
 
     for i, k in pairs(self.Attachments) do
-        if !k.Default then continue end
+        if not k.Default then continue end
 
         k.Installed = k.Default
         local atttbl = ArcticVR.AttachmentTable[k.Default]
@@ -633,40 +633,40 @@ end
 
 function SWEP:PlayNetworkedSound(sindex, soundn)
     sindex = sindex or table.KeyFromValue(self.NetworkedSounds, soundn)
+    if not sindex then return end
 
-    if sindex then
-        local vol = 75
-        local chan = CHAN_AUTO
+    local vol = 75
+    local chan = CHAN_AUTO
 
-        if sindex == 1 or sindex == 2 then
-            vol = self.ShotVolume
-            chan = CHAN_WEAPON
+    if sindex == 1 or sindex == 2 then
+         vol = self.ShotVolume
+        chan = CHAN_WEAPON
 
-            vol = vol * self:GetBuff("Buff_ShotVolume")
+        vol = vol * self:GetBuff("Buff_ShotVolume")
 
-            vol = math.Clamp(vol, 51, 149)
+        vol = math.Clamp(vol, 51, 149)
+    end
+
+    local sname = self.NetworkedSounds[sindex]
+    local spath = self[sname]
+    local owner = self:GetOwner()
+
+    if CLIENT then
+        local vm = g_VR.viewModel
+        if chan == CHAN_WEAPON then
+            vm = owner
         end
+        vm:EmitSound(spath, vol, 100, 1, chan)
 
-        local sname = self.NetworkedSounds[sindex]
-        local spath = self[sname]
+        if sname == "" then return end
 
-        if CLIENT then
-            local vm = g_VR.viewModel
-            if(chan == CHAN_WEAPON) then
-                vm = self.Owner
-            end
-            vm:EmitSound(spath, vol, 100, 1, chan)
-
-            if sname == "" then return end
-
-            net.Start("avr_playsound")
-            net.WriteUInt(sindex, 8)
-            net.SendToServer()
-        else
-            SuppressHostEvents(self.Owner)
-            self:EmitSound(spath, vol, 100, 1, chan)
-            SuppressHostEvents(NULL)
-        end
+        net.Start("avr_playsound")
+        net.WriteUInt(sindex, 8)
+        net.SendToServer()
+    else
+        SuppressHostEvents(owner)
+        self:EmitSound(spath, vol, 100, 1, chan)
+        SuppressHostEvents(NULL)
     end
 end
 
@@ -675,30 +675,22 @@ function SWEP:Cycle(blank)
     if CLIENT then
         local vm = g_VR.viewModel
 
-        if !vm then return end
-        if !IsValid(vm) then return end
-
+        if not vm then return end
+        if not IsValid(vm) then return end
 
         local msbf = self.MeanShotsBetweenJams
-        if !self.OpenBolt and msbf != 0 and 1 / msbf > math.Rand(0, 1) then
-            -- JAM
-            return
-        end
-		
-		
+        if not self.OpenBolt and msbf ~= 0 and 1 / msbf > math.Rand(0, 1) then return end -- JAM
 
-        if blank and self.Chambered > 0 then
-            if self.BulletEffect then
-                local fx2 = EffectData()
-                fx2:SetAttachment(2)
-                fx2:SetMagnitude(150)
-                fx2:SetNormal(Vector(0, 0, 0))
-                fx2:SetEntity(vm)
-                util.Effect(self.BulletEffect, fx2)
-            end
+        if blank and self.Chambered > 0 and self.BulletEffect then
+            local fx2 = EffectData()
+            fx2:SetAttachment(2)
+            fx2:SetMagnitude(150)
+            fx2:SetNormal(Vector(0, 0, 0))
+            fx2:SetEntity(vm)
+            util.Effect(self.BulletEffect, fx2)
         end
 
-        if !self.CycleDoesNotEject and self.EmptyChambered > 0 then
+        if not self.CycleDoesNotEject and self.EmptyChambered > 0 then
             if self.CaseEffect then
                 local fx2 = EffectData()
                 fx2:SetAttachment(2)

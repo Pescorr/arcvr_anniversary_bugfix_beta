@@ -1,4 +1,4 @@
-	local shootsys = CreateConVar("arcticvr_shootsys","1",FCVAR_ARCHIVE)
+local shootsys = CreateConVar("arcticvr_shootsys","1",FCVAR_ARCHIVE)
 
 function SWEP:Deploy()
     self:SendWeapon(true, false)
@@ -10,7 +10,8 @@ function SWEP:Holster()
 end
 
 function SWEP:SendWeapon(justowner, full)
-    if justowner and !IsValid(self.Owner) then return end
+    local owner = self:GetOwner()
+    if justowner and not IsValid(owner) then return end
 
     net.Start("avr_sendatts")
     net.WriteEntity(self)
@@ -18,7 +19,7 @@ function SWEP:SendWeapon(justowner, full)
     net.WriteUInt(table.Count(self.Attachments), 10)
 
     for i, k in pairs(self.Attachments) do
-        if !k.Installed then
+        if not k.Installed then
             net.WriteUInt(0, 24)
             continue
         end
@@ -40,7 +41,7 @@ function SWEP:SendWeapon(justowner, full)
     end
 
     if justowner then
-        net.Send(self.Owner)
+        net.Send(owner)
     else
         net.Broadcast()
     end
@@ -50,11 +51,12 @@ function SWEP:VR_Melee(src, vel)
     if CLIENT then return end
     if self.NextMeleeAttack > CurTime() then return end
 
-	if ( self:GetOwner():IsPlayer() ) then
-		self:GetOwner():LagCompensation( true )
-	end
+    local owner = self:GetOwner()
+    if owner:IsPlayer() then
+        owner:LagCompensation( true )
+    end
 
-    self.Owner:FireBullets({
+    owner:FireBullets({
         Damage = self.MeleeDamage,
         Src = src,
         Dir = vel:GetNormalized(),
@@ -65,11 +67,10 @@ function SWEP:VR_Melee(src, vel)
             dmg:SetDamageType(self.MeleeDamageType)
         end
     })
-	
-	if ( self:GetOwner():IsPlayer() ) then
-		self:GetOwner():LagCompensation( false )
-	end
 
+    if owner:IsPlayer() then
+        owner:LagCompensation( false )
+    end
 
     self.NextMeleeAttack = CurTime() + self.MeleeDelay
 end
@@ -79,8 +80,7 @@ function SWEP:VR_Shoot(src, ang, cycle)
     cycle = cycle or true
 
     local num = self:GetAttOverride("Override_Num") or self.Num
-	local shootsys = CreateConVar("arcticvr_shootsys","1",FCVAR_ARCHIVE)
-
+    local owner = self:GetOwner()
 
     for i = 1, num do
 
@@ -93,22 +93,22 @@ function SWEP:VR_Shoot(src, ang, cycle)
         if se then
             local rocket = ents.Create(se)
 
-            if !rocket:IsValid() then print("!!! INVALID ROUND " .. se) return false end
+            if not rocket:IsValid() then print("INVALID ROUND!!!" .. se) return false end
 
             local tr = util.TraceLine({
                 start = src,
                 endpos = src + (sang:Forward() * 50),
-                filter = self.Owner
+                filter = owner
             })
 
             rocket.ExtraProjectileData = self.ExtraProjectileData or {}
             rocket:SetAngles(sang + (self.ProjectileOffset or Angle(0, 0, 0)))
             rocket:SetPos(tr.HitPos)
-            rocket:SetOwner(self.Owner)
+            rocket:SetOwner(owner)
             rocket:Spawn()
             rocket:Activate()
-            constraint.NoCollide(self.Owner, rocket, 0, 0)
-            rocket:GetPhysicsObject():SetVelocity(self.Owner:GetAbsVelocity())
+            constraint.NoCollide(owner, rocket, 0, 0)
+            rocket:GetPhysicsObject():SetVelocity(owner:GetAbsVelocity())
             rocket:GetPhysicsObject():SetVelocityInstantaneous(ang:Forward() * self.MuzzleVelocity * self:GetBuff("Buff_MuzzleVelocity"))
         else
             local tcol = self:GetAttOverride("OverrideTracerCol") or self.TracerCol
@@ -123,92 +123,92 @@ function SWEP:VR_Shoot(src, ang, cycle)
                 local a = dmgmin
                 dmgmin = dmgmax
                 dmgmax = a
-            elseif !sniperized and self:GetAttOverride("Sniperize") then
+            elseif not sniperized and self:GetAttOverride("Sniperize") then
                 local a = dmgmin
                 dmgmin = dmgmax
                 dmgmax = a
             end
-	
-	
-			if shootsys:GetBool() then
-				if(ArcticVR.IsPhysicalBullets()) then
-					ArcticVR:ShootPhysicalBullet(src, sang,
-					self.MuzzleVelocity * self:GetBuff("Buff_MuzzleVelocity"),
-					{
-						c = tcol,
-						--l = weapon.TracerLen,
-						w = twidth
-					},
-					dmgmin,
-					dmgmax,
-					self.MaxRange * self:GetBuff("Buff_MaxRange"),
-					self,
-					self.Owner,
-					self.Penetration * self:GetBuff("Buff_Penetration"),
-					self.ShootCallback)
-				else 
-				if ( self:GetOwner():IsPlayer() ) then
-					self:GetOwner():LagCompensation( true )
-				end
-					self.Owner:FireBullets({
-						Attacker = self.Owner,
-						Damage = (dmgmin + dmgmax) / 2,
-						Force = (dmgmin + dmgmax) / 6,
-						Tracer = 1,
-						Spread = 0,//Vector(1, 1, 0) * self.Spread, // dafuq
-						Src = src,
-						Dir = sang:Forward(),
-						IgnoreEntity = self.Owner,
-						TracerName = self.TracerOverride
-					})
-				if ( self:GetOwner():IsPlayer() ) then
-					self:GetOwner():LagCompensation( false )
-				end
 
-				end
-			else
-				if ( self:GetOwner():IsPlayer() ) then
-					self:GetOwner():LagCompensation( true )
-				end
 
-				if not (ArcticVR.IsPhysicalBullets()) then
-						self.Owner:FireBullets({
-						Attacker = self.Owner,
-						Damage = (dmgmin + dmgmax) / 2,
-						Force = (dmgmin + dmgmax) / 6,
-						Tracer = 1,
-						Spread = 0,
-						Src = src,
-						Dir = sang:Forward(),
-						IgnoreEntity = self.Owner,
-						TracerName = self.TracerOverride
-					})
-				if ( self:GetOwner():IsPlayer() ) then
-					self:GetOwner():LagCompensation( false )
-				end
-				else
-					ArcticVR:ShootPhysicalBullet(src, sang,
-					self.MuzzleVelocity * self:GetBuff("Buff_MuzzleVelocity"),
-					{
-						c = tcol,
-						--l = weapon.TracerLen,
-						w = twidth
-					},
-					dmgmin,
-					dmgmax,
-					self.MaxRange * self:GetBuff("Buff_MaxRange"),
-					self,
-					self.Owner,
-					self.Penetration * self:GetBuff("Buff_Penetration"),
-					self.ShootCallback)
-				end
-			end
-			
+            if shootsys:GetBool() then
+                if ArcticVR.IsPhysicalBullets() then
+                    ArcticVR:ShootPhysicalBullet(src, sang,
+                    self.MuzzleVelocity * self:GetBuff("Buff_MuzzleVelocity"),
+                    {
+                        c = tcol,
+                        --l = weapon.TracerLen,
+                        w = twidth
+                    },
+                    dmgmin,
+                    dmgmax,
+                    self.MaxRange * self:GetBuff("Buff_MaxRange"),
+                    self,
+                    owner,
+                    self.Penetration * self:GetBuff("Buff_Penetration"),
+                    self.ShootCallback)
+                else
+                if owner:IsPlayer() then
+                    owner:LagCompensation( true )
+                end
+                    owner:FireBullets({
+                        Attacker = owner,
+                        Damage = (dmgmin + dmgmax) / 2,
+                        Force = (dmgmin + dmgmax) / 6,
+                        Tracer = 1,
+                        Spread = 0, -- Vector(1, 1, 0) * self.Spread, -- dafuq
+                        Src = src,
+                        Dir = sang:Forward(),
+                        IgnoreEntity = owner,
+                        TracerName = self.TracerOverride
+                    })
+                if owner:IsPlayer() then
+                    owner:LagCompensation( false )
+                end
+
+                end
+            else
+                if owner:IsPlayer() then
+                    owner:LagCompensation( true )
+                end
+
+                if not ArcticVR.IsPhysicalBullets() then
+                        owner:FireBullets({
+                        Attacker = owner,
+                        Damage = (dmgmin + dmgmax) / 2,
+                        Force = (dmgmin + dmgmax) / 6,
+                        Tracer = 1,
+                        Spread = 0,
+                        Src = src,
+                        Dir = sang:Forward(),
+                        IgnoreEntity = owner,
+                        TracerName = self.TracerOverride
+                    })
+                if owner:IsPlayer() then
+                    owner:LagCompensation( false )
+                end
+                else
+                    ArcticVR:ShootPhysicalBullet(src, sang,
+                    self.MuzzleVelocity * self:GetBuff("Buff_MuzzleVelocity"),
+                    {
+                        c = tcol,
+                        --l = weapon.TracerLen,
+                        w = twidth
+                    },
+                    dmgmin,
+                    dmgmax,
+                    self.MaxRange * self:GetBuff("Buff_MaxRange"),
+                    self,
+                    owner,
+                    self.Penetration * self:GetBuff("Buff_Penetration"),
+                    self.ShootCallback)
+                end
+            end
+
         end
 
     end
 
-    if !self.NonAutoloading then
+    if not self.NonAutoloading then
         self:Cycle()
     end
 end
