@@ -13,7 +13,7 @@ SWEP.Base = "arcticvr_base"
 SWEP.ArcticVR = true
 
 SWEP.Primary.ClipSize = 32
-SWEP.Primary.DefaultClip = 32
+SWEP.Primary.DefaultClip = 1000
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 

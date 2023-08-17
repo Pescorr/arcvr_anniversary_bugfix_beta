@@ -147,6 +147,15 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					nadepin:SetConVar( "arcticvr_grenade_pin_enable" )				-- Change a ConVar when the box it ticked/unticked
 					nadepin:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
+
+				--DCheckBoxLabel Start
+				local shootsys = panelArcVR2:Add( "DCheckBoxLabel" ) -- Create the checkbox
+					shootsys:SetPos( 25, 220 )						-- Set the position
+					shootsys:SetText("[Shoot System Fix] \n Check the box if the shotgun sights are significantly misaligned \n and uncheck the box if some ArcVR weapons become unusable.")					-- Set the text next to the box
+					shootsys:SetConVar( "arcticvr_shootsys" )				-- Change a ConVar when the box it ticked/unticked
+					shootsys:SizeToContents()						-- Make its size the same as the contents
+				--DCheckBoxLabel end
+
 				
 				
 				--DCheckBoxLabel Start
@@ -157,13 +166,6 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					miscfix:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
 
-				--DCheckBoxLabel Start
-				local shootsys = panelArcVR2:Add( "DCheckBoxLabel" ) -- Create the checkbox
-					shootsys:SetPos( 25, 220 )						-- Set the position
-					shootsys:SetText("[Shoot System Fix] \n Check the box if the shotgun sights are significantly misaligned \n and uncheck the box if some ArcVR weapons become unusable.")					-- Set the text next to the box
-					shootsys:SetConVar( "arcticvr_shootsys" )				-- Change a ConVar when the box it ticked/unticked
-					shootsys:SizeToContents()						-- Make its size the same as the contents
-				--DCheckBoxLabel end
 
 				--Panel2 "TAB2" end
 
@@ -208,12 +210,27 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					fist_client:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
 
-				
+				--DCheckBoxLabel Start
+				local arcticvr_kick = panelArcVR3:Add( "DCheckBoxLabel" ) -- Create the checkbox
+				arcticvr_kick:SetPos( 25, 125 )						-- Set the position
+				arcticvr_kick:SetText("[kick]-FBTOnly-(buggy)")					-- Set the text next to the box
+				arcticvr_kick:SetConVar( "arcticvr_kick" )				-- Change a ConVar when the box it ticked/unticked
+				arcticvr_kick:SizeToContents()						-- Make its size the same as the contents
+				--DCheckBoxLabel end
+
+				--DCheckBoxLabel Start
+				local arcticvr_kick_client = panelArcVR3:Add( "DCheckBoxLabel" ) -- Create the checkbox
+				arcticvr_kick_client:SetPos( 25, 150 )						-- Set the position
+				arcticvr_kick_client:SetText("[kick_client]-FBTOnly-(buggy)")					-- Set the text next to the box
+				arcticvr_kick_client:SetConVar( "arcticvr_kick_client" )				-- Change a ConVar when the box it ticked/unticked
+				arcticvr_kick_client:SizeToContents()						-- Make its size the same as the contents
+				--DCheckBoxLabel end
+
 
 				--DNumSlider Start
 				--gunmelee_velthreshold
 				local gunmelee_velthreshold= vgui.Create( "DNumSlider", panelArcVR3 )
-					gunmelee_velthreshold:SetPos( 25, 125 )				-- Set the position (X,Y)
+					gunmelee_velthreshold:SetPos( 25, 175 )				-- Set the position (X,Y)
 					gunmelee_velthreshold:SetSize( 320, 25 )			-- Set the size (X,Y)
 					gunmelee_velthreshold:SetText( "gunmelee_velthreshold" )	-- Set the text above the slider
 					gunmelee_velthreshold:SetMin( 1 )				 	-- Set the minimum number you can slide to
@@ -231,7 +248,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 				--DNumSlider Start
 				--gunmelee_damage
 				local gunmelee_damage= vgui.Create( "DNumSlider", panelArcVR3 )
-					gunmelee_damage:SetPos( 25, 150 )				-- Set the position (X,Y)
+					gunmelee_damage:SetPos( 25, 205 )				-- Set the position (X,Y)
 					gunmelee_damage:SetSize( 320, 25 )			-- Set the size (X,Y)
 					gunmelee_damage:SetText( "gunmelee_damage" )	-- Set the text above the slider
 					gunmelee_damage:SetMin( 1 )				 	-- Set the minimum number you can slide to
@@ -250,7 +267,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 				--DNumSlider Start
 				--gunmelee_Delay
 				local gunmelee_Delay= vgui.Create( "DNumSlider", panelArcVR3 )
-					gunmelee_Delay:SetPos( 25, 175 )				-- Set the position (X,Y)
+					gunmelee_Delay:SetPos( 25, 235 )				-- Set the position (X,Y)
 					gunmelee_Delay:SetSize( 320, 25 )			-- Set the size (X,Y)
 					gunmelee_Delay:SetText( "gunmelee_Delay" )	-- Set the text above the slider
 					gunmelee_Delay:SetMin( 0.001 )				 	-- Set the minimum number you can slide to
@@ -263,7 +280,8 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 
 					-- Called when the slider value changes
 					end
-				--DNumSlider end				
+				--DNumSlider end
+				
 			
 				--panel3 "TAB3" end
 			
@@ -357,6 +375,15 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					headpouch:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
 
+				-- --DCheckBoxLabel Start
+				-- local weaponpouch = panelArcVR4:Add( "DCheckBoxLabel" ) -- Create the checkbox
+				-- weaponpouch:SetPos( 25, 190 )						-- Set the position
+				-- 	weaponpouch:SetText("(WIP)[Rhand weapon pouch]")					-- Set the text next to the box
+				-- 	weaponpouch:SetConVar( "arcticvr_weppouch" )				-- Change a ConVar when the box it ticked/unticked
+				-- 	weaponpouch:SizeToContents()						-- Make its size the same as the contents
+				-- --DCheckBoxLabel end
+
+
 							
 				--Panel4 "TAB4" end
 
@@ -437,7 +464,6 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					end
 				--DNumSlider end
 
-				
 
 				
 				--panel5 "TAB5" end

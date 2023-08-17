@@ -147,6 +147,15 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					nadepin:SetConVar( "arcticvr_grenade_pin_enable" )				-- Change a ConVar when the box it ticked/unticked
 					nadepin:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
+
+				--DCheckBoxLabel Start
+				local shootsys = panelArcVR2:Add( "DCheckBoxLabel" ) -- Create the checkbox
+					shootsys:SetPos( 25, 220 )						-- Set the position
+					shootsys:SetText("[Shoot System Fix] \n Check the box if the shotgun sights are significantly misaligned \n and uncheck the box if some ArcVR weapons become unusable.")					-- Set the text next to the box
+					shootsys:SetConVar( "arcticvr_shootsys" )				-- Change a ConVar when the box it ticked/unticked
+					shootsys:SizeToContents()						-- Make its size the same as the contents
+				--DCheckBoxLabel end
+
 				
 				
 				--DCheckBoxLabel Start
@@ -157,13 +166,6 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					miscfix:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
 
-				--DCheckBoxLabel Start
-				local shootsys = panelArcVR2:Add( "DCheckBoxLabel" ) -- Create the checkbox
-					shootsys:SetPos( 25, 220 )						-- Set the position
-					shootsys:SetText("[Shoot System Fix] \n Check the box if the shotgun sights are significantly misaligned \n and uncheck the box if some ArcVR weapons become unusable.")					-- Set the text next to the box
-					shootsys:SetConVar( "arcticvr_shootsys" )				-- Change a ConVar when the box it ticked/unticked
-					shootsys:SizeToContents()						-- Make its size the same as the contents
-				--DCheckBoxLabel end
 
 				--Panel2 "TAB2" end
 
@@ -373,6 +375,15 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					headpouch:SizeToContents()						-- Make its size the same as the contents
 				--DCheckBoxLabel end
 
+				-- --DCheckBoxLabel Start
+				-- local weaponpouch = panelArcVR4:Add( "DCheckBoxLabel" ) -- Create the checkbox
+				-- weaponpouch:SetPos( 25, 190 )						-- Set the position
+				-- 	weaponpouch:SetText("(WIP)[Rhand weapon pouch]")					-- Set the text next to the box
+				-- 	weaponpouch:SetConVar( "arcticvr_weppouch" )				-- Change a ConVar when the box it ticked/unticked
+				-- 	weaponpouch:SizeToContents()						-- Make its size the same as the contents
+				-- --DCheckBoxLabel end
+
+
 							
 				--Panel4 "TAB4" end
 
@@ -452,7 +463,8 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 					-- Called when the slider value changes
 					end
 				--DNumSlider end
-				
+
+
 				
 				--panel5 "TAB5" end
 

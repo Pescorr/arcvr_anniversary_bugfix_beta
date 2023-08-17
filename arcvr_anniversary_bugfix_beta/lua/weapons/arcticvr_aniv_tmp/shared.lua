@@ -14,7 +14,7 @@ SWEP.WorldModel = "models/weapons/w_smg_tmp.mdl"
 SWEP.ArcticVR = true
 
 SWEP.Primary.ClipSize = 30
-SWEP.Primary.DefaultClip = 30
+SWEP.Primary.DefaultClip = 1000
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 

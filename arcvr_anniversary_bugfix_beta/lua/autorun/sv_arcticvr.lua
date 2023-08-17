@@ -303,7 +303,7 @@ local function GrabAndPose(ent, pos, ang, lefthand, ply)
 
     net.Start("vrutil_net_pickup")
     net.WriteEntity(ply)
-    -- net.WriteEntity(ent)
+    net.WriteEntity(ent)
     net.WriteBool(lefthand)
     net.WriteVector(locpos)
     net.WriteAngle(locang)

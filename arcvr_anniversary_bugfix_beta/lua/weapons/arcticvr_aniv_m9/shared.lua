@@ -14,7 +14,7 @@ SWEP.WorldModel = "models/weapons/w_pist_elite_single.mdl"
 SWEP.ArcticVR = true
 
 SWEP.Primary.ClipSize = 15
-SWEP.Primary.DefaultClip = 15
+SWEP.Primary.DefaultClip = 1000
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 

@@ -14,7 +14,7 @@ SWEP.WorldModel = "models/weapons/w_pist_deagle.mdl"
 SWEP.ArcticVR = true
 
 SWEP.Primary.ClipSize = 7
-SWEP.Primary.DefaultClip = 7
+SWEP.Primary.DefaultClip = 1000
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "357"
 

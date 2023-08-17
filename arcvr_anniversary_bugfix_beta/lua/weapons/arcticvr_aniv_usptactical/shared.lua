@@ -14,7 +14,7 @@ SWEP.WorldModel = "models/weapons/w_pist_usp_silencer.mdl"
 SWEP.ArcticVR = true
 
 SWEP.Primary.ClipSize = 12
-SWEP.Primary.DefaultClip = 12
+SWEP.Primary.DefaultClip = 1000
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "pistol"
 
