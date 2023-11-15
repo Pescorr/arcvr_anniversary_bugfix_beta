@@ -13,7 +13,7 @@ function SWEP:EjectMagazine(grab)
 
     local locpos, locang = LocalToWorld(self.MagazineOffset, self.MagazineAngleOffset, vm:GetPos(), vm:GetAngles())
 
-    net.Start("avr_magout")
+    net.Start("avr_magout_r")
     net.WriteBool(grab)
     net.WriteVector(locpos)
     net.WriteAngle(locang)

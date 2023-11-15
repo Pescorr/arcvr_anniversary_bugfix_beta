@@ -455,65 +455,65 @@ hook.Add( "VRMod_Tracking", "avr_guntracking", function()
         lhpos = LocalToWorld(spos, ang_offset, rhpos, newang)
 
     end
-    --start
-        -- local function StartLerpingToGrabPoint(targetGrabPoint)
-                    -- local vm = g_VR.viewModel
+--start
+	-- local function StartLerpingToGrabPoint(targetGrabPoint)
+				-- local vm = g_VR.viewModel
 
-                    -- local tmpModel = g_VR.viewModel
-                    -- tmpModel:SetupBones()
-                    
-                    -- -- cvrg.boltBone = tmpModel:LookupBone("bolt")
-                    -- -- cvrg.boltHandleBone = tmpModel:LookupBone("bolthandle")
-                    -- -- cvrg.triggerBone = tmpModel:LookupBone("trigger")
-                    -- -- cvrg.magBone = tmpModel:LookupBone("mag")
-                    -- -- cvrg.bulletBone = tmpModel:LookupBone("bullet")
-                    -- -- cvrg.muzzleBone = tmpModel:LookupBone("muzzle")
-                    -- -- cvrg.entranceBone = tmpModel:LookupBone("mag_entrance")
-                    -- -- cvrg.sightBone = tmpModel:LookupBone("holosight")
-                    -- -- cvrg.leftHandBone = tmpModel:LookupBone("ValveBiped.Bip01_L_Hand")
-                    -- -- cvrg.rightHandBone = tmpModel:LookupBone("ValveBiped.Bip01_R_Hand")
-                    
-                    
-                    -- local grabPoints = {}
-            -- -- holdingGrip = (targetGrabPoint and targetGrabPoint.type == GRIP or false)
-            -- -- releasingGrip = (targetGrabPoint==nil and grabPoint.type == GRIP or false)
-            -- -- local releasingBolt = (targetGrabPoint == nil and boltGrabOffset and true or false)
-            -- --
-            
-            -- handLerpTime = SysTime()
-            
-            -- fingerPoseOpenStart = vrmod.GetLeftHandOpenFingerAngles()
-            -- fingerPoseClosedStart = vrmod.GetLeftHandClosedFingerAngles()
-            -- fingerPoseOpenEnd = targetGrabPoint and targetGrabPoint.fingerPose or g_VR.defaultOpenHandAngles
-            -- fingerPoseClosedEnd = targetGrabPoint and targetGrabPoint.fingerPose or g_VR.defaultClosedHandAngles
-            
-            -- entityStart = entityEnd
-            -- entityEnd = targetGrabPoint and tmpModel
-            
-            -- if entityStart then
-                
-                -- if true then
-                    -- boneStart = tmpModel
-                    -- local mtxRH = tmpModel:GetBoneMatrix(boneStart)
-                    -- local mtxSlide = tmpModel:GetBoneMatrix(boneEnd)
-                    -- local handWPos, handWAng = LocalToWorld(grabPoint.pos, grabPoint.ang, mtxSlide:GetTranslation(), mtxSlide:GetAngles())
-                    -- posStart, angStart = WorldToLocal( handWPos, handWAng, mtxRH:GetTranslation(), mtxRH:GetAngles())
-                -- else
-                    -- boneStart = boneEnd
-                    -- posStart, angStart = posEnd, angEnd
-                -- end
-                
-            -- end
-            -- if entityStart then
-                -- boneEnd = targetGrabPoint.bone
-                -- posEnd, angEnd = targetGrabPoint.pos, targetGrabPoint.ang
-            -- end
-            
-            -- grabPoints = targetGrabPoint
-        -- end
-        
+				-- local tmpModel = g_VR.viewModel
+				-- tmpModel:SetupBones()
+				
+				-- -- cvrg.boltBone = tmpModel:LookupBone("bolt")
+				-- -- cvrg.boltHandleBone = tmpModel:LookupBone("bolthandle")
+				-- -- cvrg.triggerBone = tmpModel:LookupBone("trigger")
+				-- -- cvrg.magBone = tmpModel:LookupBone("mag")
+				-- -- cvrg.bulletBone = tmpModel:LookupBone("bullet")
+				-- -- cvrg.muzzleBone = tmpModel:LookupBone("muzzle")
+				-- -- cvrg.entranceBone = tmpModel:LookupBone("mag_entrance")
+				-- -- cvrg.sightBone = tmpModel:LookupBone("holosight")
+				-- -- cvrg.leftHandBone = tmpModel:LookupBone("ValveBiped.Bip01_L_Hand")
+				-- -- cvrg.rightHandBone = tmpModel:LookupBone("ValveBiped.Bip01_R_Hand")
+				
+				
+				-- local grabPoints = {}
+		-- -- holdingGrip = (targetGrabPoint and targetGrabPoint.type == GRIP or false)
+		-- -- releasingGrip = (targetGrabPoint==nil and grabPoint.type == GRIP or false)
+		-- -- local releasingBolt = (targetGrabPoint == nil and boltGrabOffset and true or false)
+		-- --
+		
+		-- handLerpTime = SysTime()
+		
+		-- fingerPoseOpenStart = vrmod.GetLeftHandOpenFingerAngles()
+		-- fingerPoseClosedStart = vrmod.GetLeftHandClosedFingerAngles()
+		-- fingerPoseOpenEnd = targetGrabPoint and targetGrabPoint.fingerPose or g_VR.defaultOpenHandAngles
+		-- fingerPoseClosedEnd = targetGrabPoint and targetGrabPoint.fingerPose or g_VR.defaultClosedHandAngles
+		
+		-- entityStart = entityEnd
+		-- entityEnd = targetGrabPoint and tmpModel
+		
+		-- if entityStart then
+			
+			-- if true then
+				-- boneStart = tmpModel
+				-- local mtxRH = tmpModel:GetBoneMatrix(boneStart)
+				-- local mtxSlide = tmpModel:GetBoneMatrix(boneEnd)
+				-- local handWPos, handWAng = LocalToWorld(grabPoint.pos, grabPoint.ang, mtxSlide:GetTranslation(), mtxSlide:GetAngles())
+				-- posStart, angStart = WorldToLocal( handWPos, handWAng, mtxRH:GetTranslation(), mtxRH:GetAngles())
+			-- else
+				-- boneStart = boneEnd
+				-- posStart, angStart = posEnd, angEnd
+			-- end
+			
+		-- end
+		-- if entityStart then
+			-- boneEnd = targetGrabPoint.bone
+			-- posEnd, angEnd = targetGrabPoint.pos, targetGrabPoint.ang
+		-- end
+		
+		-- grabPoints = targetGrabPoint
+	 -- end
+	
 
-    -- --end
+-- --end
 				-- local vm = g_VR.viewModel
 				
 

@@ -251,7 +251,7 @@ function SWEP:VRInput(action, state)
             if self.NextCanSpawnMagTime > CurTime() then return end
 
             if LocalPlayer():GetAmmoCount(self.Primary.Ammo) > 0 then
-                net.Start("avr_spawnmag")
+                net.Start("avr_spawnmag_r")
                     local pos, ang = g_VR.tracking.pose_lefthand.pos, g_VR.tracking.pose_lefthand.ang
                     net.WriteVector(pos)
                     net.WriteAngle(ang)
