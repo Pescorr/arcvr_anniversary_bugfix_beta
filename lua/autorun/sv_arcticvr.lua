@@ -289,8 +289,8 @@ local function GrabAndPose(ent, pos, ang, lefthand, ply)
     end
 
     local found = false
-    for k2,v2 in pairs(g_VR[ply:SteamID()].heldItems) do
-        if v2.ent == ent then table.remove(g_VR[ply:SteamID()].heldItems, k2) found = true end
+    for k2,v2 in pairs(g_VR[ply:SteamID64()].heldItems) do
+        if v2.ent == ent then table.remove(g_VR[ply:SteamID64()].heldItems, k2) found = true end
     end
     if !found then
         ply:PickupObject(ent)
@@ -299,7 +299,7 @@ local function GrabAndPose(ent, pos, ang, lefthand, ply)
     ent.originalCollisionGroup = ent:GetCollisionGroup()
     ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
     ent:MakePhysicsObjectAShadow(true,true)
-    g_VR[ply:SteamID()].heldItems[#g_VR[ply:SteamID()].heldItems + 1] = {ent = ent, left = lefthand, localPos = locpos, localAng = locang, targetPos = Vector(0,0,0), targetReached = SysTime()}
+    g_VR[ply:SteamID64()].heldItems[#g_VR[ply:SteamID64()].heldItems + 1] = {ent = ent, left = lefthand, localPos = locpos, localAng = locang, targetPos = Vector(0,0,0), targetReached = SysTime()}
 
     net.Start("vrutil_net_pickup")
     net.WriteEntity(ply)
@@ -400,7 +400,7 @@ net.Receive("avr_spawnmag_r", function(len, ply)
 
     if !wpn.ArcticVR then return end
 
-    for k, v in pairs(g_VR[ply:SteamID()].heldItems) do
+    for k, v in pairs(g_VR[ply:SteamID64()].heldItems) do
         if v.left then return end
     end
 
