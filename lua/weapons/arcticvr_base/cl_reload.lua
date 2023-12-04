@@ -1,6 +1,6 @@
-local cv_bumpreload = CreateClientConVar("arcticvr_mag_bumpreload","1",FCVAR_ARCHIVE)
-local cv_bumpreload_allgun = CreateConVar("arcticvr_bumpreload_allgun","0",FCVAR_ARCHIVE) or false
-local cv_bumpreload_allgun_client = CreateClientConVar("arcticvr_bumpreload_allgun_client","0",FCVAR_ARCHIVE)
+local cv_bumpreload = CreateClientConVar("arcticvr_mag_bumpreload","1",true,FCVAR_ARCHIVE)
+local cv_bumpreload_allgun = CreateClientConVar("arcticvr_bumpreload_allgun","0",true,FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) or false
+local cv_bumpreload_allgun_client = CreateClientConVar("arcticvr_bumpreload_allgun_client","0",true,FCVAR_ARCHIVE)
 
 
 function SWEP:EjectMagazine(grab)
@@ -13,7 +13,7 @@ function SWEP:EjectMagazine(grab)
 
     local locpos, locang = LocalToWorld(self.MagazineOffset, self.MagazineAngleOffset, vm:GetPos(), vm:GetAngles())
 
-    net.Start("avr_magout_r")
+    net.Start("avr_magout")
     net.WriteBool(grab)
     net.WriteVector(locpos)
     net.WriteAngle(locang)

@@ -43,7 +43,7 @@ function ENT:Initialize()
                 SafeRemoveEntity(self)
             end)
         else
-            timer.Simple(60, function()
+            timer.Simple(20, function()
                 SafeRemoveEntity(self)
             end)
         end

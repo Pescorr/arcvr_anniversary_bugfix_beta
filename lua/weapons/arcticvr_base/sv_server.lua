@@ -1,4 +1,4 @@
-	local shootsys = CreateConVar("arcticvr_shootsys","1",FCVAR_ARCHIVE)
+	local shootsys = CreateClientConVar("arcticvr_shootsys","1",true,FCVAR_ARCHIVE)
 
 function SWEP:Deploy()
     self:SendWeapon(true, false)
@@ -79,7 +79,7 @@ function SWEP:VR_Shoot(src, ang, cycle)
     cycle = cycle or true
 
     local num = self:GetAttOverride("Override_Num") or self.Num
-	local shootsys = CreateConVar("arcticvr_shootsys","1",FCVAR_ARCHIVE)
+	local shootsys = CreateClientConVar("arcticvr_shootsys","1",true,FCVAR_ARCHIVE)
 
 
     for i = 1, num do

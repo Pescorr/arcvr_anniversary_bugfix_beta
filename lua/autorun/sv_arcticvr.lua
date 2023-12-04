@@ -1,7 +1,7 @@
 
 if SERVER then
-CreateConVar("arcticvr_net_magtimertime", "0.08")
-CreateConVar("arcticvr_defaultammo_normalize", "0", FCVAR_ARCHIVE, "")
+    CreateClientConVar("arcticvr_net_magtimertime", "0.11",true,FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE)
+    CreateClientConVar("arcticvr_defaultammo_normalize", "0",true, FCVAR_ARCHIVE, "")
 
 hook.Add( "OnEntityCreated", "ArcticVR_NormalizeDefaultAmmo", function( ent )
     if !ent:IsWeapon() then return end
@@ -41,7 +41,7 @@ local function EntityPose(ent, handpos, handang, right)
 end
 
 
-CreateConVar("arcticvr_physical_bullets", "0", FCVAR_ARCHIVE, "")
+CreateClientConVar("arcticvr_physical_bullets", "0",true, FCVAR_ARCHIVE, "")
 
 local phys_bullets = GetConVar("arcticvr_physical_bullets")
 function ArcticVR.IsPhysicalBullets()
@@ -62,12 +62,12 @@ util.AddNetworkString("avr_secondaryattack")
 util.AddNetworkString("avr_nadethrow")
 util.AddNetworkString("avr_pose")
 util.AddNetworkString("avr_magin")
-util.AddNetworkString("avr_magout_r")
+util.AddNetworkString("avr_magout")
 util.AddNetworkString("avr_rack")
 util.AddNetworkString("avr_playsound")
 util.AddNetworkString("avr_magin_forclient")
 util.AddNetworkString("avr_updatemag")
-util.AddNetworkString("avr_spawnmag_r")
+util.AddNetworkString("avr_spawnmag")
 util.AddNetworkString("avr_despawnmag")
 util.AddNetworkString("avr_attach")
 util.AddNetworkString("avr_detach")
@@ -289,17 +289,17 @@ local function GrabAndPose(ent, pos, ang, lefthand, ply)
     end
 
     local found = false
-    for k2,v2 in pairs(g_VR[ply:SteamID64()].heldItems) do
-        if v2.ent == ent then table.remove(g_VR[ply:SteamID64()].heldItems, k2) found = true end
+    for k2,v2 in pairs(g_VR[ply:SteamID()].heldItems) do
+        if v2.ent == ent then table.remove(g_VR[ply:SteamID()].heldItems, k2) found = true end
     end
     if !found then
         ply:PickupObject(ent)
         timer.Simple(0, function() ply:DropObject() end)
     end
     ent.originalCollisionGroup = ent:GetCollisionGroup()
-    ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+    ent:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
     ent:MakePhysicsObjectAShadow(true,true)
-    g_VR[ply:SteamID64()].heldItems[#g_VR[ply:SteamID64()].heldItems + 1] = {ent = ent, left = lefthand, localPos = locpos, localAng = locang, targetPos = Vector(0,0,0), targetReached = SysTime()}
+    g_VR[ply:SteamID()].heldItems[#g_VR[ply:SteamID()].heldItems + 1] = {ent = ent, left = lefthand, localPos = locpos, localAng = locang, targetPos = Vector(0,0,0), targetReached = SysTime()}
 
     net.Start("vrutil_net_pickup")
     net.WriteEntity(ply)
@@ -338,7 +338,7 @@ function ArcticVR.CreateMag(magid, rounds)
     return mag
 end
 
-net.Receive("avr_magout_r", function(len, ply)
+net.Receive("avr_magout", function(len, ply)
     local grab = net.ReadBool()
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
@@ -390,7 +390,7 @@ net.Receive("avr_pose", function(len, ply)
     GrabAndPose(ent, pos, ang, lefthand, ply)
 end)
 
-net.Receive("avr_spawnmag_r", function(len, ply)
+net.Receive("avr_spawnmag", function(len, ply)
     local pos = net.ReadVector()
     local ang = net.ReadAngle()
     local timertime = 0
@@ -400,7 +400,7 @@ net.Receive("avr_spawnmag_r", function(len, ply)
 
     if !wpn.ArcticVR then return end
 
-    for k, v in pairs(g_VR[ply:SteamID64()].heldItems) do
+    for k, v in pairs(g_VR[ply:SteamID()].heldItems) do
         if v.left then return end
     end
 

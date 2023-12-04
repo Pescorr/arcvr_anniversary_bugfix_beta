@@ -1,10 +1,10 @@
 
-local cv_allowgunmelee = false or CreateConVar("arcticvr_gunmelee", "1", FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) 
-local cv_usegunmelee = CreateClientConVar("arcticvr_gunmelee_client","1",FCVAR_ARCHIVE)
-local cv_allowfist = false or CreateConVar("arcticvr_fist", "1", FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) 
-local cv_usefist = CreateClientConVar("arcticvr_fist_client","1",FCVAR_ARCHIVE)
-local cv_allowkick = false or CreateConVar("arcticvr_kick", "0", FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) 
-local cv_usekick = CreateClientConVar("arcticvr_kick_client","0",FCVAR_ARCHIVE)
+local cv_allowgunmelee = false or CreateClientConVar("arcticvr_gunmelee", "1",true, FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) 
+local cv_usegunmelee = CreateClientConVar("arcticvr_gunmelee_client","1",true,FCVAR_ARCHIVE)
+local cv_allowfist = false or CreateClientConVar("arcticvr_fist", "1",true,FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) 
+local cv_usefist = CreateClientConVar("arcticvr_fist_client","1",true,FCVAR_ARCHIVE)
+local cv_allowkick = false or CreateClientConVar("arcticvr_kick", "0",true, FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) 
+local cv_usekick = CreateClientConVar("arcticvr_kick_client","0",true,FCVAR_ARCHIVE)
 
 function SWEP:DetectMeleeweapon(ply)
     if cv_usegunmelee:GetBool() and cv_allowgunmelee:GetBool() then

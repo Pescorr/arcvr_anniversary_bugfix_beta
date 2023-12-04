@@ -50,7 +50,7 @@ function case:Init(data)
     self:SetPos(origin)
     self:SetModel(self.Model)
     self:SetModelScale(self.Scale)
-    self:DrawShadow(false)
+    self:DrawShadow(true)
     self:SetAngles(ang)
 
     if self.Material then

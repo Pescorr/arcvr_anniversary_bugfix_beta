@@ -1,11 +1,11 @@
 
 ArcticVR.lasthelditem = nil
-	local cv_allgunreloadkey = CreateConVar("arcticvr_allgun_allow_reloadkey","0",FCVAR_ARCHIVE) or false
-	local cv_allgunreloadkeyclient = CreateClientConVar("arcticvr_allgun_allow_reloadkey_client","0",FCVAR_ARCHIVE)
-	local cv_gripwithreloadkey = CreateClientConVar("arcticvr_grip_withreloadkey","0",FCVAR_ARCHIVE)
-	local cv_disablereloadkey = CreateClientConVar("arcticvr_disable_reloadkey","0",FCVAR_ARCHIVE)
-	local cv_disablegrabreload = CreateClientConVar("arcticvr_disable_grabreload","1",FCVAR_ARCHIVE)
-	local cv_gripplus = CreateClientConVar("arcticvr_grip_magnification","1.0",FCVAR_ARCHIVE)
+	local cv_allgunreloadkey = CreateClientConVar("arcticvr_allgun_allow_reloadkey","0",true,FCVAR_REPLICATED + FCVAR_NOTIFY + FCVAR_ARCHIVE) or false
+	local cv_allgunreloadkeyclient = CreateClientConVar("arcticvr_allgun_allow_reloadkey_client","0",true,FCVAR_ARCHIVE)
+	local cv_gripwithreloadkey = CreateClientConVar("arcticvr_grip_withreloadkey","0",true,FCVAR_ARCHIVE)
+	local cv_disablereloadkey = CreateClientConVar("arcticvr_disable_reloadkey","0",true,FCVAR_ARCHIVE)
+	local cv_disablegrabreload = CreateClientConVar("arcticvr_disable_grabreload","1",true,FCVAR_ARCHIVE)
+	local cv_gripplus = CreateClientConVar("arcticvr_grip_magnification","1.0",true,FCVAR_ARCHIVE)
 
 function SWEP:VRInput(action, state)
     local vm = g_VR.viewModel
@@ -220,7 +220,7 @@ function SWEP:VRInput(action, state)
         dist = GetConVar("arcticvr_hybridpouchdist"):GetFloat()
     end
 	
-	if GetConVar("vrmod_floatinghands"):GetBool() or GetConVar("arcticvr_infpouch"):GetBool() then
+	if  GetConVar("arcticvr_infpouch"):GetBool() then
 		pouchbone = "ValveBiped.Bip01_Pelvis"
 		dist = 99999
 	end
@@ -251,7 +251,7 @@ function SWEP:VRInput(action, state)
             if self.NextCanSpawnMagTime > CurTime() then return end
 
             if LocalPlayer():GetAmmoCount(self.Primary.Ammo) > 0 then
-                net.Start("avr_spawnmag_r")
+                net.Start("avr_spawnmag")
                     local pos, ang = g_VR.tracking.pose_lefthand.pos, g_VR.tracking.pose_lefthand.ang
                     net.WriteVector(pos)
                     net.WriteAngle(ang)
