@@ -22,7 +22,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 
 				local panelArcVR1 = vgui.Create( "DPanel", sheet )
 				sheet:AddSheet( "Settings1", panelArcVR1, "icon16/tick.png" )
-				panelArcVR1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
+				-- panelArcVR1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
 
 				
 				--DCheckBoxLabel Start
@@ -109,7 +109,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 				--Panel2 "TAB2" Start		
 				local panelArcVR2 = vgui.Create( "DPanel", sheet )
 				sheet:AddSheet( "Settings2", panelArcVR2, "icon16/tick.png" )
-				panelArcVR2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
+				-- panelArcVR2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
 
 				
 				--DCheckBoxLabel Start
@@ -173,7 +173,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 
 				local panelArcVR3 = vgui.Create( "DPanel", sheet )
 				sheet:AddSheet( "GunMelee", panelArcVR3, "icon16/tick.png" )
-				panelArcVR3.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
+				-- panelArcVR3.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
 
 				
 				
@@ -270,7 +270,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 
 		--Panel4 "TAB4" Start
 			local panelArcVR4 = vgui.Create( "DPanel", sheet )
-			panelArcVR4.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
+			-- panelArcVR4.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
 			sheet:AddSheet( "MagPouch", panelArcVR4, "icon16/briefcase.png" )
 
 
@@ -364,7 +364,7 @@ hook.Add("VRMod_Menu","addarcvr",function(frame)
 
 				local panelArcVR5 = vgui.Create( "DPanel", sheet )
 				sheet:AddSheet( "Server", panelArcVR5, "icon16/tick.png" )
-				panelArcVR5.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
+				-- panelArcVR5.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, self:GetAlpha() ) ) end 
 
 
 
